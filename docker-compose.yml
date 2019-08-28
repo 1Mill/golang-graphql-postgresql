@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  backend:
+    build: ./src/backend
+    ports:
+      - 8080:8080
+
+  client:
+    build: ./src/client
+
+  db:
+    env_file:
+      - '.env'
+    image: postgres:11-alpine
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres: {}

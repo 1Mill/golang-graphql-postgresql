@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 
 	"github.com/jinzhu/gorm"
@@ -26,7 +25,7 @@ type User struct {
 	lastName  string
 }
 
-func connectToDb() (*sql.DB) {
+func connectToDb() *gorm.DB {
 	// * Database info object
 	var databaseInfo DatabaseInfo
 	databaseInfo.host = "db"
@@ -40,14 +39,14 @@ func connectToDb() (*sql.DB) {
 
 	// * Try to connect to the database
 	fmt.Println("connecting to database")
-	db, err := sql.Open("postgres", psqlInfo)
+	db, err := gorm.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
 
 	// * Try pinging the database
-	err = db.Ping()
+	err = db.DB().Ping()
 	if err != nil {
 		panic(err)
 	}

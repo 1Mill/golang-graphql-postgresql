@@ -1,5 +1,14 @@
 FROM golang:1-alpine
 
+RUN apk update \
+	&& apk upgrade \
+	&& apk add git
+
+# * Install required packages
+RUN go get -u github.com/jinzhu/gorm \
+	github.com/jinzhu/gorm/dialects/postgres \
+	github.com/lib/pq
+
 RUN mkdir /app
 WORKDIR /app
 

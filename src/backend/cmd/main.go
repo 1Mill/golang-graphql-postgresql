@@ -41,14 +41,14 @@ func connectToDb() *gorm.DB {
 	fmt.Println("connecting to database")
 	db, err := gorm.Open("postgres", psqlInfo)
 	if err != nil {
-		panic(err)
+		fmt.Errorf(err)
 	}
 	defer db.Close()
 
 	// * Try pinging the database
 	err = db.DB().Ping()
 	if err != nil {
-		panic(err)
+		fmt.Errorf(err)
 	}
 
 	fmt.Println("successfully connected to database")

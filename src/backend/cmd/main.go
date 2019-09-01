@@ -7,15 +7,6 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-// DatabaseInfo is used to connect to the database
-type DatabaseInfo struct {
-	host     string
-	name     string
-	password string
-	port     int
-	user     string
-}
-
 // User model
 type User struct {
 	gorm.Model
@@ -25,41 +16,33 @@ type User struct {
 	lastName  string
 }
 
-func connectToDb() *gorm.DB {
-	// * Database info object
-	var databaseInfo DatabaseInfo
-	databaseInfo.host = "db"
-	databaseInfo.name = "development_db"
-	databaseInfo.password = "password"
-	databaseInfo.port = 5432
-	databaseInfo.user = "ggp-user"
-
+func main() {
 	// * Build connection string
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", databaseInfo.host, databaseInfo.port, databaseInfo.user, databaseInfo.password, databaseInfo.name)
+	psqlInfo := fmt.Sprintf("host=db port=5432 user=ggp-user password=password dbname=development_db sslmode=disable")
 
 	// * Try to connect to the database
 	fmt.Println("connecting to database")
 	db, err := gorm.Open("postgres", psqlInfo)
 	if err != nil {
-		fmt.Errorf(err)
+		panic(err)
 	}
 	defer db.Close()
 
 	// * Try pinging the database
 	err = db.DB().Ping()
 	if err != nil {
-		fmt.Errorf(err)
+		panic(err)
 	}
-
 	fmt.Println("successfully connected to database")
-	return db
-}
 
-func main() {
-	db := connectToDb()
+	// * Drop User table if table already exists (to reset the database to clean state)
+	db.DropTableIfExists(&User{})
 
-	// * Migrate schema
-	db.AutoMigrate(&User{})
+	// * Create User table
+	db.CreateTable(&User{})
+
+	// // * Migrate schema
+	// db.AutoMigrate(&User{})
 
 	// // * Create db
 	// db.Create(&User{email: "abc@html.erb", firstName: "Example", lastName: "Testing"})

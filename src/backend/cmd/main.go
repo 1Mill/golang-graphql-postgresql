@@ -11,9 +11,9 @@ import (
 type User struct {
 	gorm.Model
 
-	email     string
-	firstName string
-	lastName  string
+	Email     string
+	FirstName string
+	LastName  string
 }
 
 func main() {
@@ -39,18 +39,20 @@ func main() {
 	db.DropTableIfExists(&User{})
 
 	// * Create User table
-	db.CreateTable(&User{})
+	// db.CreateTable(&User{})
+	db.AutoMigrate(&User{})
 
-	// // * Migrate schema
-	// db.AutoMigrate(&User{})
+	// * Create db
+	db.Create(&User{Email: "abc@html.erb", FirstName: "Example", LastName: "Testing"})
 
-	// // * Create db
-	// db.Create(&User{email: "abc@html.erb", firstName: "Example", lastName: "Testing"})
-
-	// // * Read
-	// var user User
-	// db.First(&user, 1)                           // * Get User with id 1
+	// * Read
+	var user User
+	db.First(&user, 1) // * Get User with id 1
 	// db.First(&user, "email = ?", "abc@html.erb") // * Find User with email
+
+	println("printing user")
+	println(user.Email)
+	println("finished printing user")
 
 	// // * Print users to screen
 	// http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

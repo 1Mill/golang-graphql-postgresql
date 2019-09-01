@@ -18,17 +18,17 @@ func main() {
 	psqlInfo := fmt.Sprintf("host=db port=5432 user=ggp-user password=password dbname=development_db sslmode=disable")
 	db, err := gorm.Open("postgres", psqlInfo)
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	err = db.DB().Ping()
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	schema, err := schema.GetSchema()
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	graphqlSchema := graphql.MustParseSchema(schema, &query{})

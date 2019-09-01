@@ -6,9 +6,8 @@ RUN apk update \
 
 # * Install required packages
 RUN go get -u \
-	github.com/go-chi/chi \
-	github.com/go-chi/render \
-	github.com/graphql-go/graphql \
+	github.com/graph-gophers/graphql-go \
+	github.com/graph-gophers/graphql-go/relay \
 	github.com/jinzhu/gorm \
 	github.com/jinzhu/gorm/dialects/postgres
 

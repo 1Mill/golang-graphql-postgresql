@@ -5,12 +5,11 @@ import (
 	"log"
 	"net/http"
 
+	"../internal/graphql/schema"
+	graphql "github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-
-	s "../internal/graphql/schema"
-	graphql "github.com/graph-gophers/graphql-go"
 )
 
 type query struct{}
@@ -27,8 +26,13 @@ func main() {
 		panic(err)
 	}
 
-	schema := graphql.MustParseSchema(s.Schema(), &query{})
-	http.Handle("/graphql", &relay.Handler{Schema: schema})
+	schema, err := schema.GetSchema()
+	if err != nil {
+		panic(err)
+	}
+
+	graphqlSchema := graphql.MustParseSchema(schema, &query{})
+	http.Handle("/graphql", &relay.Handler{Schema: graphqlSchema})
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 

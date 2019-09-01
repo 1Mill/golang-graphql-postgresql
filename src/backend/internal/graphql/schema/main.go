@@ -1,13 +1,9 @@
 package schema
 
-// Schema returns the graphql shema
-func Schema() string {
-	return `
-		schema {
-			query: Query
-		}
-		type Query {
-			hello: String!
-		}
-	`
+import "io/ioutil"
+
+// GetSchema exports the graphql schema for the file
+func GetSchema() (string, error) {
+	b, err := ioutil.ReadFile("./graphql/schema/schema.graphql")
+	return string(b), err
 }

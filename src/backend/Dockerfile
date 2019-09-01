@@ -6,8 +6,7 @@ RUN apk update \
 
 # * Install required packages
 RUN go get -u github.com/jinzhu/gorm \
-	github.com/jinzhu/gorm/dialects/postgres \
-	github.com/lib/pq
+	github.com/jinzhu/gorm/dialects/postgres
 
 RUN mkdir /app
 WORKDIR /app

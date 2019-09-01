@@ -5,7 +5,11 @@ RUN apk update \
 	&& apk add git
 
 # * Install required packages
-RUN go get -u github.com/jinzhu/gorm \
+RUN go get -u \
+	github.com/go-chi/chi \
+	github.com/go-chi/render \
+	github.com/graphql-go/graphql \
+	github.com/jinzhu/gorm \
 	github.com/jinzhu/gorm/dialects/postgres
 
 RUN mkdir /app

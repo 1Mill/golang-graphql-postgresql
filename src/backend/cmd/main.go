@@ -26,7 +26,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	schema, err := schema.GetSchema()
+	schema, err := schema.String()
 	if err != nil {
 		log.Panic(err)
 	}

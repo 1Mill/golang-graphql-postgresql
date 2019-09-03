@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"../internal/graphql/schema"
+	"../pkg/graphql/schema"
 	graphql "github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
 	"github.com/jinzhu/gorm"
@@ -24,7 +24,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	graphqlSchema := graphql.MustParseSchema(schema.String(), &Query{})
+	graphqlSchema := graphql.MustParseSchema(schema.String("./gql"), &Query{})
 	http.Handle("/graphql", &relay.Handler{Schema: graphqlSchema})
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

@@ -8,10 +8,9 @@ import (
 )
 
 // String exports the graphql schema as a string to be consumed by graphql-go
-func String() string {
+func String(root string) string {
 	var paths []string
 
-	root := "./gql"
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err

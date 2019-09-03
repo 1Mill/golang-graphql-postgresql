@@ -24,7 +24,9 @@ func main() {
 		log.Panic(err)
 	}
 
-	graphqlSchema := graphql.MustParseSchema(schema.String("./gql"), &Query{})
+	s := schema.String("./gql")
+	graphqlSchema := graphql.MustParseSchema(s, &Query{})
+
 	http.Handle("/graphql", &relay.Handler{Schema: graphqlSchema})
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

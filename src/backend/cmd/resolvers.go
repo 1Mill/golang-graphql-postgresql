@@ -10,5 +10,5 @@ func (_ *Query) Hello() string {
 
 // Testing resolves testing query
 func (_ *Query) Testing() string {
-	return "SLKFJLKSDJFLJDSLKFSF"
+	return "Testing"
 }

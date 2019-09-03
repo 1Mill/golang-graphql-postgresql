@@ -12,8 +12,6 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-type query struct{}
-
 func main() {
 	psqlInfo := fmt.Sprintf("host=db port=5432 user=ggp-user password=password dbname=development_db sslmode=disable")
 	db, err := gorm.Open("postgres", psqlInfo)
@@ -26,11 +24,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	graphqlSchema := graphql.MustParseSchema(schema.String(), &query{})
+	graphqlSchema := graphql.MustParseSchema(schema.String(), &Query{})
 	http.Handle("/graphql", &relay.Handler{Schema: graphqlSchema})
 	log.Fatal(http.ListenAndServe(":8080", nil))
-}
-
-func (_ *query) Hello() string {
-	return "Hello, World!"
 }

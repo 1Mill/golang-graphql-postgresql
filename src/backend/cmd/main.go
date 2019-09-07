@@ -6,11 +6,16 @@ import (
 	"net/http"
 
 	"../pkg/graphql/schema"
-	graphql "github.com/graph-gophers/graphql-go"
+	"github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
+
+// DB is the root database for all operations
+type DB struct {
+	db *gorm.DB
+}
 
 func main() {
 	psqlInfo := fmt.Sprintf("host=db port=5432 user=ggp-user password=password dbname=development_db sslmode=disable")
@@ -25,7 +30,7 @@ func main() {
 	}
 
 	s := schema.String("./gql")
-	graphqlSchema := graphql.MustParseSchema(s, &Query{})
+	graphqlSchema := graphql.MustParseSchema(s, &Resolver{db: db})
 
 	http.Handle("/graphql", &relay.Handler{Schema: graphqlSchema})
 	log.Fatal(http.ListenAndServe(":8080", nil))

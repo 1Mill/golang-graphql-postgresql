@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"fmt"
 
+	"github.com/graph-gophers/graphql-go"
 	"github.com/jinzhu/gorm"
 )
 
@@ -15,12 +17,6 @@ type User struct {
 	lastName  string
 }
 
-// UserResolver contains the database and the user model to resolve the graphql query against
-type UserResolver struct {
-	db *DB
-	m  User
-}
-
 // GetUser fetches the user from the database
 func (db *DB) GetUser(ctx context.Context) (*User, error) {
 	var user User
@@ -30,4 +26,16 @@ func (db *DB) GetUser(ctx context.Context) (*User, error) {
 	}
 
 	return &user, nil
+}
+
+// UserResolver contains the database and the user model to resolve the graphql query against
+type UserResolver struct {
+	db *DB
+	m  User
+}
+
+// ID resolves the user ID
+func (u *UserResolver) ID(ctx context.Context) *graphql.ID {
+	s := graphql.ID(fmt.Sprint(u.m.ID))
+	return &s
 }

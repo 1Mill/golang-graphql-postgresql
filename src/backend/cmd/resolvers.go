@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 )
 
 // Resolver is the root resolver for the graphql query
@@ -20,11 +21,14 @@ func (_ *Resolver) Testing() string {
 }
 
 // GetUser resolves the graphql query
-func (r *Resolver) GetUser(ctx context.Context) (string, error) {
+func (r *Resolver) GetUser(ctx context.Context) string {
 	user, err := r.db.GetUser(ctx)
 	if err != nil {
-		return "", err
+		return ""
 	}
 
-	return user, nil
+	log.Println(user)
+	log.Println(user.Email)
+
+	return "SLKDJFLKDSJFKL"
 }

@@ -1,0 +1,10 @@
+type User {
+	id: ID!
+	deletedAt: String!
+	createdAt: String!
+	updatedAt: String!
+
+	email: String!
+	firstName: String
+	lastName: String
+}

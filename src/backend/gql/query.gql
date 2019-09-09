@@ -1,4 +1,5 @@
 type Query {
 	hello: String!
 	testing: String!
+	getUser: String!
 }

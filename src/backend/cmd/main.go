@@ -30,7 +30,7 @@ func main() {
 	}
 
 	s := schema.String("./gql")
-	graphqlSchema := graphql.MustParseSchema(s, &Resolver{db: db})
+	graphqlSchema := graphql.MustParseSchema(s, &Resolver{db: &DB{db: db}})
 
 	http.Handle("/graphql", &relay.Handler{Schema: graphqlSchema})
 	log.Fatal(http.ListenAndServe(":8080", nil))

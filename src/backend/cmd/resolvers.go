@@ -1,10 +1,12 @@
 package main
 
-import "github.com/jinzhu/gorm"
+import (
+	"context"
+)
 
 // Resolver is the root resolver for the graphql query
 type Resolver struct {
-	db *gorm.DB
+	db *DB
 }
 
 // Hello resolves hello query
@@ -15,4 +17,14 @@ func (_ *Resolver) Hello() string {
 // Testing resolves testing query
 func (_ *Resolver) Testing() string {
 	return "Testing"
+}
+
+// GetUser resolves the graphql query
+func (r *Resolver) GetUser(ctx context.Context) (string, error) {
+	user, err := r.db.GetUser(ctx)
+	if err != nil {
+		return "", err
+	}
+
+	return user, nil
 }

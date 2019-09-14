@@ -17,6 +17,8 @@ func main() {
 		log.Panic(err)
 	}
 
+	db.Seed()
+
 	s := schema.String("./gql")
 	graphqlSchema := graphql.MustParseSchema(s, &Resolver{db: db})
 

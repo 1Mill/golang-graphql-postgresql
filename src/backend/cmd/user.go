@@ -12,7 +12,9 @@ import (
 type User struct {
 	gorm.Model
 
-	Email string
+	Email     string
+	NameFirst string
+	NameLast  string
 }
 
 // GetUser fetches the user from the database
@@ -42,4 +44,22 @@ func (u *UserResolver) Email(ctx context.Context) string {
 func (u *UserResolver) ID(ctx context.Context) graphql.ID {
 	s := graphql.ID(fmt.Sprint(u.m.ID))
 	return s
+}
+
+// NameFirst resolves the first name of the user
+func (u *UserResolver) NameFirst(ctx context.Context) *string {
+	s := u.m.NameFirst
+	if s == "" {
+		return nil
+	}
+	return &s
+}
+
+// NameLast resolves the last name of the user
+func (u *UserResolver) NameLast(ctx context.Context) *string {
+	s := u.m.NameLast
+	if s == "" {
+		return nil
+	}
+	return &s
 }

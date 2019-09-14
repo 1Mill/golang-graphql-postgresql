@@ -30,13 +30,16 @@ func dbConnect() (*DB, error) {
 
 var users = []User{
 	{
-		Email: "testing@html.erb",
+		Email:     "testing@html.erb",
+		NameFirst: "First",
+		NameLast:  "Last",
 	},
 	{
-		Email: "sdlkfjlskf@html.erb",
+		Email: "missing_names@html.erb",
 	},
 	{
-		Email: "email@html.erb",
+		Email:     "john@html.erb",
+		NameFirst: "John",
 	},
 }
 

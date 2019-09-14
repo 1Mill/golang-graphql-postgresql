@@ -12,9 +12,7 @@ import (
 type User struct {
 	gorm.Model
 
-	Email     string
-	firstName string
-	lastName  string
+	Email string
 }
 
 // GetUser fetches the user from the database
@@ -35,12 +33,13 @@ type UserResolver struct {
 }
 
 // Email resolves the user email
-func (u *UserResolver) Email(ctx context.Context) *string {
-	return &u.m.Email
+func (u *UserResolver) Email(ctx context.Context) string {
+	s := u.m.Email
+	return s
 }
 
 // ID resolves the user ID
-func (u *UserResolver) ID(ctx context.Context) *graphql.ID {
+func (u *UserResolver) ID(ctx context.Context) graphql.ID {
 	s := graphql.ID(fmt.Sprint(u.m.ID))
-	return &s
+	return s
 }

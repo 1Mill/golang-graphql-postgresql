@@ -4,12 +4,12 @@ import (
 	"log"
 	"net/http"
 
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 	database "../internal/database"
-	graphql "github.com/graph-gophers/graphql-go"
-	relay "github.com/graph-gophers/graphql-go/relay"
 	resolver "../internal/resolver"
 	schema "../pkg/graphql/schema"
+	graphql "github.com/graph-gophers/graphql-go"
+	relay "github.com/graph-gophers/graphql-go/relay"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 func main() {

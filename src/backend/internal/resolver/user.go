@@ -43,11 +43,11 @@ func (u *UserResolver) ID(ctx context.Context) graphql.ID {
 
 // Name resolves the full name of the user
 func (u *UserResolver) Name(ctx context.Context) *string {
-	s := fmt.Sprintf("%s %s", u.m.NameFirst, u.m.NameLast)
-	if s == "" {
-		return nil
+	if u.m.NameFirst != "" && u.m.NameLast != "" {
+		s := fmt.Sprintf("%s %s", u.m.NameFirst, u.m.NameLast)
+		return &s
 	}
-	return &s
+	return nil
 }
 
 // NameFirst resolves the first name of the user

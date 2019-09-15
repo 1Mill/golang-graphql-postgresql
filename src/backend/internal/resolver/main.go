@@ -1,10 +1,14 @@
-package main
+package resolver
 
-import "context"
+import (
+	"context"
+
+	database "../database"
+)
 
 // Resolver is the root resolver for the graphql query
 type Resolver struct {
-	db *DB
+	DB *database.DB
 }
 
 // Hello resolves hello query
@@ -19,13 +23,13 @@ func (_ *Resolver) Testing() string {
 
 // GetUser resolves the graphql query
 func (r *Resolver) GetUser(ctx context.Context) (*UserResolver, error) {
-	user, err := r.db.GetUser(ctx)
+	user, err := r.DB.GetUser(ctx)
 	if err != nil {
 		return nil, err
 	}
 
 	s := UserResolver{
-		db: r.db,
+		db: r.DB,
 		m:  *user,
 	}
 	return &s, nil

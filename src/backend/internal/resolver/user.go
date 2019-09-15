@@ -1,37 +1,18 @@
-package main
+package resolver
 
 import (
 	"context"
 	"fmt"
 
-	"github.com/graph-gophers/graphql-go"
-	"github.com/jinzhu/gorm"
+	database "../database"
+	model "../model"
+	graphql "github.com/graph-gophers/graphql-go"
 )
-
-// User model defins users within the application
-type User struct {
-	gorm.Model
-
-	Email     string
-	NameFirst string
-	NameLast  string
-}
-
-// GetUser fetches the user from the database
-func (db *DB) GetUser(ctx context.Context) (*User, error) {
-	var user User
-	err := db.DB.First(&user).Error
-	if err != nil {
-		return nil, err
-	}
-
-	return &user, nil
-}
 
 // UserResolver contains the database and the user model to resolve the graphql query against
 type UserResolver struct {
-	db *DB
-	m  User
+	db *database.DB
+	m  model.User
 }
 
 // Email resolves the user email

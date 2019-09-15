@@ -2,18 +2,13 @@ package main
 
 import (
 	"fmt"
-	"log"
 
-	"github.com/jinzhu/gorm"
+	database "../internal/database"
+	gorm "github.com/jinzhu/gorm"
 )
 
-// DB is the database for this application
-type DB struct {
-	DB *gorm.DB
-}
-
 // dbConnect connects to the database
-func dbConnect() (*DB, error) {
+func dbConnect() (*database.DB, error) {
 	psqlInfo := fmt.Sprintf("host=db port=5432 user=ggp-user password=password dbname=development_db sslmode=disable")
 	db, err := gorm.Open("postgres", psqlInfo)
 	if err != nil {
@@ -25,33 +20,5 @@ func dbConnect() (*DB, error) {
 		return nil, err
 	}
 
-	return &DB{DB: db}, nil
-}
-
-var users = []User{
-	{
-		Email:     "testing@html.erb",
-		NameFirst: "First",
-		NameLast:  "Last",
-	},
-	{
-		Email: "missing_names@html.erb",
-	},
-	{
-		Email:     "john@html.erb",
-		NameFirst: "John",
-	},
-}
-
-// Seed the database with test data
-func (db *DB) Seed() {
-	db.DB.DropTableIfExists(&User{})
-	db.DB.AutoMigrate(&User{})
-
-	for _, u := range users {
-		err := db.DB.Create(&u).Error
-		if err != nil {
-			log.Panic(err)
-		}
-	}
+	return &database.DB{DB: db}, nil
 }

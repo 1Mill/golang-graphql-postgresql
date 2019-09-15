@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	model "../model"
@@ -26,6 +27,22 @@ var users = []model.User{
 // DB is the root database for all operations
 type DB struct {
 	DB *gorm.DB
+}
+
+// Connect to the database instance
+func Connect() (*DB, error) {
+	psqlInfo := fmt.Sprintf("host=db port=5432 user=ggp-user password=password dbname=development_db sslmode=disable")
+	db, err := gorm.Open("postgres", psqlInfo)
+	if err != nil {
+		return nil, err
+	}
+
+	err = db.DB().Ping()
+	if err != nil {
+		return nil, err
+	}
+
+	return &DB{DB: db}, nil
 }
 
 // Seed the database with test data

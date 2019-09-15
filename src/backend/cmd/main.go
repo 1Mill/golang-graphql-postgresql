@@ -4,15 +4,16 @@ import (
 	"log"
 	"net/http"
 
-	resolver "../internal/resolver"
-	schema "../pkg/graphql/schema"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+	database "../internal/database"
 	graphql "github.com/graph-gophers/graphql-go"
 	relay "github.com/graph-gophers/graphql-go/relay"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	resolver "../internal/resolver"
+	schema "../pkg/graphql/schema"
 )
 
 func main() {
-	db, err := dbConnect()
+	db, err := database.Connect()
 	if err != nil {
 		log.Panic(err)
 	}

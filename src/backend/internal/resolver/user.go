@@ -15,6 +15,20 @@ type UserResolver struct {
 	m  model.User
 }
 
+// GetUser resolves the graphql query
+func (r *Resolver) GetUser(ctx context.Context) (*UserResolver, error) {
+	user, err := r.DB.GetUser(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	s := UserResolver{
+		db: r.DB,
+		m:  *user,
+	}
+	return &s, nil
+}
+
 // Email resolves the user email
 func (u *UserResolver) Email(ctx context.Context) string {
 	s := u.m.Email

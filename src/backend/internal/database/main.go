@@ -58,10 +58,10 @@ func (db *DB) Seed() {
 	}
 }
 
-// GetUser fetches the user from the database
-func (db *DB) GetUser(ctx context.Context) (*model.User, error) {
+// User fetches the user from the database by their id
+func (db *DB) User(ctx context.Context, id string) (*model.User, error) {
 	var user model.User
-	err := db.DB.First(&user).Error
+	err := db.DB.First(&user, id).Error
 	if err != nil {
 		return nil, err
 	}

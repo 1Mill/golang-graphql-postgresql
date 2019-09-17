@@ -15,9 +15,9 @@ type UserResolver struct {
 	m  model.User
 }
 
-// GetUser resolves the graphql query
-func (r *Resolver) GetUser(ctx context.Context) (*UserResolver, error) {
-	user, err := r.DB.GetUser(ctx)
+// User finds the user by their id
+func (r *Resolver) User(ctx context.Context, args struct{ ID graphql.ID }) (*UserResolver, error) {
+	user, err := r.DB.User(ctx, fmt.Sprint(args.ID))
 	if err != nil {
 		return nil, err
 	}

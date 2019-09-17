@@ -29,13 +29,13 @@ func (r *Resolver) User(ctx context.Context, args struct{ ID graphql.ID }) (*Use
 	return &s, nil
 }
 
-// Email resolves the user email
+// Email resolves the email attribute of the user
 func (u *UserResolver) Email(ctx context.Context) string {
 	s := u.m.Email
 	return s
 }
 
-// ID resolves the user ID
+// ID resolves the ID attribute of the user
 func (u *UserResolver) ID(ctx context.Context) graphql.ID {
 	s := graphql.ID(fmt.Sprint(u.m.ID))
 	return s

@@ -1,3 +1,4 @@
 type Query {
+	book(id: ID!): Book
 	user(id: ID!): User
 }

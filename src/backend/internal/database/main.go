@@ -23,6 +23,24 @@ var users = []model.User{
 		NameFirst: "John",
 	},
 }
+var books = []model.Book{
+	{
+		DatePublished: "1234-12-12",
+		Title:         "Some random title",
+	},
+	{
+		DatePublished: "",
+		Title:         "Some crazy title for a book that is long!",
+	},
+	{
+		DatePublished: "1929-02-01",
+		Title:         "An old title",
+	},
+	{
+		DatePublished: "1992-01-01",
+		Title:         "A new title",
+	},
+}
 
 // DB is the root database for all operations
 type DB struct {
@@ -47,8 +65,8 @@ func Connect() (*DB, error) {
 
 // Seed the database with test data
 func (db *DB) Seed() {
-	db.DB.DropTableIfExists(&model.User{})
-	db.DB.AutoMigrate(&model.User{})
+	db.DB.DropTableIfExists(&model.User{}, &model.Book{})
+	db.DB.AutoMigrate(&model.User{}, &model.Book{})
 
 	for _, u := range users {
 		err := db.DB.Create(&u).Error
@@ -56,6 +74,22 @@ func (db *DB) Seed() {
 			log.Panic(err)
 		}
 	}
+	for _, b := range books {
+		err := db.DB.Create(&b).Error
+		if err != nil {
+			log.Panic(err)
+		}
+	}
+}
+
+// Book fetches a book from the database by their id
+func (db *DB) Book(ctx context.Context, id string) (*model.Book, error) {
+	var book model.Book
+	err := db.DB.First(&book, id).Error
+	if err != nil {
+		return nil, err
+	}
+	return &book, nil
 }
 
 // User fetches the user from the database by their id
@@ -65,6 +99,5 @@ func (db *DB) User(ctx context.Context, id string) (*model.User, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return &user, nil
 }

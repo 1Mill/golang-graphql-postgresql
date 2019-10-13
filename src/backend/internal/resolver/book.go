@@ -29,6 +29,15 @@ func (r *Resolver) Book(ctx context.Context, args struct{ ID graphql.ID }) (*Boo
 	return &s, nil
 }
 
+// Author resolves the author graphql relationship
+func (r *BookResolver) Author(ctx context.Context) (*UserResolver, error) {
+	u, err := r.db.User(ctx, fmt.Sprint(r.m.AuthorID))
+	if err != nil {
+		return nil, err
+	}
+	return &UserResolver{db: r.db, m: *u}, nil
+}
+
 // DatePublished resolves the datePublished graphql attribute
 func (r *BookResolver) DatePublished(ctx context.Context) *string {
 	s := r.m.DatePublished

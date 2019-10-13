@@ -11,4 +11,7 @@ type User struct {
 	Email     string
 	NameFirst string
 	NameLast  string
+
+	// has_many relatinship
+	Books []Book `gorm:"foreignkey:AuthorID"`
 }

@@ -1,8 +1,10 @@
 type Book {
+	author: User!
 	datePublished: String
 	title: String!
 }
 type User {
+	books: [Book]!
 	email: String!
 	id: ID!
 	name: String

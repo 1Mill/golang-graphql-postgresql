@@ -25,18 +25,22 @@ var users = []model.User{
 }
 var books = []model.Book{
 	{
+		AuthorID:      1,
 		DatePublished: "1234-12-12",
 		Title:         "Some random title",
 	},
 	{
+		AuthorID:      1,
 		DatePublished: "",
 		Title:         "Some crazy title for a book that is long!",
 	},
 	{
+		AuthorID:      2,
 		DatePublished: "1929-02-01",
 		Title:         "An old title",
 	},
 	{
+		AuthorID:      2,
 		DatePublished: "1992-01-01",
 		Title:         "A new title",
 	},
@@ -80,6 +84,13 @@ func (db *DB) Seed() {
 			log.Panic(err)
 		}
 	}
+}
+
+// Books fetches multiple books from the database by their ids
+func (db *DB) Books(ctx context.Context, ids []string) ([]model.Book, error) {
+	var books []model.Book
+	err := db.DB.Where(ids).Find(&books).Error
+	return books, err
 }
 
 // Book fetches a book from the database by their id

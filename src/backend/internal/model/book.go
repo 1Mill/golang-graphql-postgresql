@@ -10,4 +10,7 @@ type Book struct {
 
 	DatePublished string
 	Title         string
+
+	// belongs_to relationships
+	AuthorID uint
 }

@@ -29,6 +29,23 @@ func (r *Resolver) User(ctx context.Context, args struct{ ID graphql.ID }) (*Use
 	return &s, nil
 }
 
+// Books resolves the books graphql relationship
+func (r *UserResolver) Books(ctx context.Context) ([]*BookResolver, error) {
+	// TODO: Get user books ids...
+	ids := []string{"1", "2", "200"}
+
+	books, err := r.db.Books(ctx, ids)
+	if err != nil {
+		return []*BookResolver{}, err
+	}
+
+	array := make([]*BookResolver, len(books))
+	for i := range books {
+		array[i] = &BookResolver{db: r.db, m: books[i]}
+	}
+	return array, nil
+}
+
 // Email resolves the email attribute of the user
 func (u *UserResolver) Email(ctx context.Context) string {
 	s := u.m.Email

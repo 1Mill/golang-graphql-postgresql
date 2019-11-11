@@ -47,29 +47,29 @@ func (r *UserResolver) Books(ctx context.Context) ([]*BookResolver, error) {
 }
 
 // Email resolves the email attribute of the user
-func (u *UserResolver) Email(ctx context.Context) string {
-	s := u.m.Email
+func (r *UserResolver) Email(ctx context.Context) string {
+	s := r.m.Email
 	return s
 }
 
 // ID resolves the ID attribute of the user
-func (u *UserResolver) ID(ctx context.Context) graphql.ID {
-	s := graphql.ID(fmt.Sprint(u.m.ID))
+func (r *UserResolver) ID(ctx context.Context) graphql.ID {
+	s := graphql.ID(fmt.Sprint(r.m.ID))
 	return s
 }
 
 // Name resolves the full name of the user
-func (u *UserResolver) Name(ctx context.Context) *string {
-	if u.m.NameFirst != "" && u.m.NameLast != "" {
-		s := fmt.Sprintf("%s %s", u.m.NameFirst, u.m.NameLast)
+func (r *UserResolver) Name(ctx context.Context) *string {
+	if r.m.NameFirst != "" && r.m.NameLast != "" {
+		s := fmt.Sprintf("%s %s", r.m.NameFirst, r.m.NameLast)
 		return &s
 	}
 	return nil
 }
 
 // NameFirst resolves the first name of the user
-func (u *UserResolver) NameFirst(ctx context.Context) *string {
-	s := u.m.NameFirst
+func (r *UserResolver) NameFirst(ctx context.Context) *string {
+	s := r.m.NameFirst
 	if s == "" {
 		return nil
 	}
@@ -77,8 +77,8 @@ func (u *UserResolver) NameFirst(ctx context.Context) *string {
 }
 
 // NameLast resolves the last name of the user
-func (u *UserResolver) NameLast(ctx context.Context) *string {
-	s := u.m.NameLast
+func (r *UserResolver) NameLast(ctx context.Context) *string {
+	s := r.m.NameLast
 	if s == "" {
 		return nil
 	}
